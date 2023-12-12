@@ -1,0 +1,18 @@
+video_capture_settings_a:
+    camera_port: 0
+    fps: 30
+    height: 1024
+    width: 1280
+    filter_blank: true
+    filter_blank_std_dev_threshold: 5
+    publish_cropped: false
+    publish_uncropped: true
+video_capture_settings_b:
+    camera_port: 1
+    fps: 30
+    height: 1024
+    width: 1280
+    filter_blank: true
+    filter_blank_std_dev_threshold: 5
+    publish_cropped: false
+    publish_uncropped: true

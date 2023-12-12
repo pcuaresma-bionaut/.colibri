@@ -1,0 +1,8 @@
+procedure:
+ use_water: False
+ orient_angle:
+ - 0 # deg azimuth
+ - 45 # deg elevation
+ fenestration_force: 20.0 # mN
+ retrieval_force: -5.0 # mN
+ bot: BOT_Mayo_092623

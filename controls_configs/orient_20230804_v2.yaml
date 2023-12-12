@@ -1,0 +1,8 @@
+procedure:
+ use_water: True
+ orient_angle:
+ - 0 # deg azimuth
+ - 10 # deg elevation
+ fenestration_force: 20.0 # mN
+ retrieval_force: -5.0 # mN
+ bot: BOT_150_3A4L_SHELL

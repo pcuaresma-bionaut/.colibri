@@ -1,0 +1,59 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_8em_v2_static_new
+  - key: procedure
+    default: ORIENT
+    #IN_VIVO_ORIENT, HAPPY_PATH_DWM
+  - key: procedure_suffix
+    default: BLIM10
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+  - key: experiment_num
+    default: _bot_detection_test_2
+    
+log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230804_v2.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py
+    name: 01_elmo_launch
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir click_to_plan:=False using_ui:=True
+    name: 02_stereo_launch
+
+  - type: delay
+    seconds: 5
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a cam_port:=$cam_a_port click_to_plan:=False using_ui:=True input_dir:=$input_dir fps:=$fps
+    name: 03_mono_tracking_a_launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b cam_port:=$cam_b_port click_to_plan:=False using_ui:=True input_dir:=$input_dir fps:=$fps
+    name: 04_mono_tracking_b_launch
+
+  - type: delay
+    seconds: 10
+
+  - type: colibri_research_ws
+    arguments: launch controls_pkg integrated_controls_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir procedure_suffix:=$procedure_suffix experiment_num:=$experiment_num
+    name: 05_controls_launch
+
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node --ros-args -p procedure_plan:=$procedure
+    name: 06_procedure_state
+
+  - type: procedure_ui
+    name: 07_procedure_ui_launch
+    
+  - type: colibri_research_ws
+    name: 08_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_EXP$experiment_num
+    

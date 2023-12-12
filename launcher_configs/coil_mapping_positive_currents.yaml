@@ -1,0 +1,52 @@
+parameters:
+  - key: mag_model_input_dir
+    default: /home/bionautlabs/.colibri/input_20230928_mayo_final
+  - key: matrix_mapper_ip_dir
+    default: /home/bionautlabs/repos/colibri_research_ws/matrix_mapper
+  - key: exp_type
+    default: mag_model_val
+    #mapping, mapping_val, mag_model_val
+  - key: active_coils
+    default: "[5]"
+  - key: active_coil_int
+    default: 5
+  - key: driver_currents
+    default: "[70]"
+  - key: driver_current_int
+    default: 70
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+
+log_dir: $experiment_op_dir/$exp_type_coil$active_coil_int_p$driver_current_intA
+
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/system_characterization_v1.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py
+    name: 01_elmo_launch
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg optitrack_stream
+    name: 02_optitrack_stream
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: launch controls_pkg mps_send_currents_launch.py exp_op_dir:=$experiment_op_dir exp_type:=$exp_type active_coils:=$active_coils driver_currents:=$driver_currents
+    name: 03_sending_currents_launch
+
+  - type: colibri_research_ws
+    arguments: run controls_pkg coil_mapping_and_validation_node --ros-args -p matrix_mapper_ip_dir:=$matrix_mapper_ip_dir -p mag_model_input_dir:=$mag_model_input_dir -p exp_op_dir:=$experiment_op_dir -p exp_type:=$exp_type -p active_coils:=$active_coils -p driver_currents:=$driver_currents
+    name: 04_coil_mapping
+    
+  - type: colibri_research_ws
+    name: 05_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_$exp_type_coil$active_coil_int_p$driver_current_intA
+    

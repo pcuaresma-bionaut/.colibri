@@ -1,0 +1,65 @@
+parameters:
+  - key: vision_config_path
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static.yaml
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20231211_mayo_final
+  - key: procedure
+    default: ORIENT
+    #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
+  - key: procedure_suffix
+    default: '20231212_BLIM10_mayo'
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+    # default: /home/bionautlabs/.colibri/logs/
+    # /media/bionautlabs/My Passport/b_logs/
+  - key: experiment_num
+    default: _5
+log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: subprocess
+    arguments: ffmpeg -f x11grab -y -r 15 -i :1 -vcodec libx264 $log_dir/screen_recording.avi
+    show_terminal: False
+
+  - type: colibri_research_ws
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py
+    name: 01_elmo_launch
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir configuration:=$vision_config_path
+    name: 02_stereo_launch
+
+  - type: delay
+    seconds: 5
+
+  - type: colibri_research_ws
+    name: 03_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_$procedure_$procedure_suffix_EXP$experiment_num
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a configuration:=$vision_config_path input_dir:=$input_dir
+    name: 04_mono_tracking_a_launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b configuration:=$vision_config_path input_dir:=$input_dir
+    name: 05_mono_tracking_b_launch
+
+  - type: delay
+    seconds: 10
+
+  - type: colibri_research_ws
+    arguments: launch controls_pkg integrated_controls_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir procedure_suffix:=$procedure_suffix experiment_num:=$experiment_num
+    name: 06_controls_launch
+
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node --ros-args -p procedure_plan:=$procedure
+    name: 07_procedure_state
+
+  - type: procedure_ui
+    name: 08_procedure_ui_launch

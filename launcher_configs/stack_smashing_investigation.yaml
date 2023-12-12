@@ -1,0 +1,85 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_8em_v2_static/
+  - key: cam_a_port
+    default: 0
+  - key: cam_b_port
+    default: 2
+  - key: fps
+    default: 30  
+  - key: procedure
+    default: HAPPY_PATH_DWM
+  - key: experiment_op_dir
+    default: "/media/bionautlabs/T7 Shield/"
+  - key: procedure_suffix
+    default: mps_on_bug_investigation
+  - key: procedure_suffix
+    default: stack_smash_investigation
+  - key: experiment_num
+    default: _13
+log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230807_v1.yaml
+startup_steps:
+  - type: colcon_build
+  - type: colibri_research_ws
+    arguments: bag play /home/bionautlabs/repos/colibri_research_ws/rosbag2_2023_08_08-15_55_04 -l
+    name: 01_bag
+  - type: colibri_research_ws
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py
+    name: 02_elmo
+  - type: delay
+    seconds: 2
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir click_to_plan:=False using_ui:=True
+    name: 03_vision_stereo
+  - type: delay
+    seconds: 5
+  - type: colibri_research_ws
+    arguments: "topic pub /cropbox_is_init_a std_msgs/Bool '{data: True}'"
+    name: 04_cropbox_is_init_a
+    show_terminal: False
+  - type: colibri_research_ws
+    arguments: "topic pub /cropbox_is_init_b std_msgs/Bool '{data: True}'"
+    name: 05_cropbox_is_init_b
+    show_terminal: False
+  - type: colibri_research_ws
+    arguments: "topic pub /cropbox_a std_msgs/Int32MultiArray '{data: [568, 192, 1033, 564]}'"
+    name: 06_cropbox_a
+    show_terminal: False
+  - type: colibri_research_ws
+    arguments: "topic pub /cropbox_b std_msgs/Int32MultiArray '{data: [460, 176, 870, 466]}'"
+    name: 07_cropbox_b
+    show_terminal: False
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_node_cnn --ros-args -p cam_index:=a -p input_dir:=$input_dir
+    name: 08_detector_a
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_correction_node --ros-args -p cam_index:=a -p input_dir:=$input_dir -p click_to_plan:=False -p using_ui:=True
+    name: 09_correction_a
+    show_terminal: False
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_node_cnn --ros-args -p cam_index:=b -p input_dir:=$input_dir
+    name: 10_detector_b
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_correction_node --ros-args -p cam_index:=b -p input_dir:=$input_dir -p click_to_plan:=False -p using_ui:=True
+    name: 11_correction_b
+    show_terminal: False
+  - type: delay
+    seconds: 10
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node --ros-args -p procedure_plan:=$procedure
+    name: 12_procedure_state
+  - type: colibri_research_ws
+    arguments: launch controls_pkg integrated_controls_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir procedure_suffix:=$procedure_suffix experiment_num:=$experiment_num
+    name: 13_controls
+  - type: delay
+    seconds: 25
+  - type: subprocess
+    arguments: ffmpeg -f x11grab -y -r 15 -s 1920*1080 -i :1 -vcodec huffyuv $log_dir/screen_EXP$experiment_num.avi
+    name: 14_screen_capture
+  # - type: procedure_ui
+  #   name: 15_ui
+  - type: colibri_research_ws
+    name: 16_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_EXP$experiment_num
+    

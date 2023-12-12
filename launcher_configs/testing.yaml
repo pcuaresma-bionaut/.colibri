@@ -1,0 +1,44 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_8em_v2_static/
+  - key: cam_a_port
+    default: 0
+  - key: cam_b_port
+    default: 2
+  - key: fps
+    default: 30  
+  - key: procedure
+    default: ORIENT    
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/experiment_data/misc/
+       
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230807_v1.yaml
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: "launch elmo_python_pkg elmo_client_w_heartbeat_launch.py"
+  - type: delay
+    seconds: 2
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir click_to_plan:=True using_ui:=True
+  - type: delay
+    seconds: 5
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a cam_port:=$cam_a_port click_to_plan:=True using_ui:=True fps:=$fps input_dir:=$input_dir
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b cam_port:=$cam_b_port click_to_plan:=True using_ui:=True fps:=$fps input_dir:=$input_dir
+ # - type: delay
+ #   seconds: 5
+  - type: delay
+    seconds: 30
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node 
+  - type: colibri_research_ws
+    arguments: launch controls_pkg cl_dwm_with_ps_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir
+  # - type: colibri_research_ws
+  #   arguments: launch controls_pkg modular_cl_dwm_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir
+  # - type: colibri_research_ws
+  #   arguments: run controls_pkg confirm_manual_keypress_node
+  - type: procedure_ui
+    

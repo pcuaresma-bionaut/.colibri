@@ -1,0 +1,48 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20230924_mayo
+  - key: cam_a_port
+    default: 1
+  - key: cam_b_port
+    default: 0
+  - key: fps
+    default: 30
+  - key: procedure
+    default: ORIENT
+    #IN_VIVO_ORIENT, HAPPY_PATH_DWM
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+  - key: exp_num
+    default: 3
+  - key: cart
+    default: 2
+  - key: coil
+    default: 4
+  - key: experiment
+    default: xray_mapping
+    # mapping, mapping_validation
+  - key: object
+    default: mapper
+    # cart mapper
+  - key: mapper_current
+    default: 50
+  
+  
+log_dir: $experiment_op_dir/$experiment_coil$coil_p$mapper_currentA
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230804_v2.yaml
+
+startup_steps:
+  - type: colcon_build
+
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg img_capture_node --ros-args -p cam_index:=a -p cam_port:=$cam_a_port -p input_dir:=$input_dir -p fps:=$fps -p pub_raw:=True -p pub_crop:=False
+    name: 01_img_capture_a
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg img_capture_node --ros-args -p cam_index:=b -p cam_port:=$cam_b_port -p input_dir:=$input_dir -p fps:=$fps -p pub_raw:=True -p pub_crop:=False
+    name: 02_img_capture_b
+  
+  - type: colibri_research_ws
+    arguments: run vision_pkg mapping_via_xray_object_locations --ros-args -p input_dir:=$input_dir -p cart:=$cart -p coil:=$coil -p object:=$object -p mapper_current:=$mapper_current -p experiment:=$experiment -p exp_op_dir:=$experiment_op_dir
+    name: 03_mapping_node

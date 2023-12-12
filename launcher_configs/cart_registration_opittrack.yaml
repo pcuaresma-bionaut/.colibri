@@ -1,0 +1,41 @@
+parameters:
+  - key: mag_model_input_dir
+    default: /home/bionautlabs/.colibri/input_20231210_mayo_final
+  - key: exp_type
+    default: 20231210_global
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+  - key: cart
+    default: 1
+  - key: procedure
+    default: ORIENT
+
+log_dir: $experiment_op_dir/$exp_type_cart$cart
+
+# log_dir: $experiment_op_dir/gravity_fiducials
+
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/mayo_v1.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg optitrack_stream
+    name: 01_optitrack_stream
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg cart_registration_node --ros-args -p cart_id:=$cart -p input_dir:=$mag_model_input_dir -p compare_fids:=True
+    name: 02_cart_reg
+
+  - type: colibri_research_ws
+    arguments: topic echo \cart$cart 
+    name: 03_cart_fids_echo
+
+  # - type: colibri_research_ws
+  #   arguments: topic echo \gravity_fiducials
+  #   name: 03_gravity_fiducials_echo
+
+  - type: colibri_research_ws
+    name: 05_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_cart$cart
+    # arguments: bag record --all --output $log_dir/rosbag_gravity_fiducials

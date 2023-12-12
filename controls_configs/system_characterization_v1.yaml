@@ -1,0 +1,7 @@
+system_characterization:
+  current_step_duration: 50
+  mag_model_input_folder: input_8em_v2_static_new
+  max_matrix_mapper_runs: 5
+  max_ramp_counter: 10
+  hold_duration: 5
+  current_profile_file: some_file.xlsx

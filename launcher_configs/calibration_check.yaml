@@ -1,0 +1,62 @@
+parameters:
+  - key: vision_config_path
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20231210_mayo_final
+  - key: procedure
+    default: ORIENT
+    #IN_VIVO_ORIENT, HAPPY_PATH_DWM
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+  - key: exp_num
+    default: 20231211_calib_check_5
+    
+log_dir: $experiment_op_dir/$exp_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  # - type: colibri_research_ws
+  #   arguments: run vision_pkg optitrack_stream
+  #   name: 05_optitrack_stream
+
+  # - type: colibri_research_ws
+  #   arguments: topic echo /mapper
+  #   name: 06_optitrack_fids
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg img_capture_node --ros-args -p cam_index:=a -p input_dir:=$input_dir -p configuration:=$vision_config_path
+    name: 01_img_capture_a
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg img_capture_node --ros-args -p cam_index:=b -p input_dir:=$input_dir -p configuration:=$vision_config_path
+    name: 02_img_capture_b
+  
+  # - type: colibri_research_ws
+  #   arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir click_to_plan:=False using_ui:=True
+  #   name: 02_stereo_launch
+
+  # - type: colibri_research_ws
+  #   arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a cam_port:=$cam_a_port click_to_plan:=False using_ui:=True input_dir:=$input_dir fps:=$fps
+  #   name: 03_mono_tracking_a_launch
+
+  # - type: colibri_research_ws
+  #   arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b cam_port:=$cam_b_port click_to_plan:=False using_ui:=True input_dir:=$input_dir fps:=$fps
+  #   name: 04_mono_tracking_b_launch
+
+  - type: colibri_research_ws
+    arguments: run planning_pkg click_save_raw_points_node --ros-args -p cam_a_index:=a -p cam_pair:=ab -p input_dir:=$input_dir -p registration:=True -p crop:=False
+    name: 03_click_save_raw
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg calibration_check_node --ros-args -p input_dir:=$experiment_op_dir/$exp_num
+    name: 04_calib_check
+
+
+  # - type: colibri_research_ws
+  #   name: 08_rosbag_record
+  #   arguments: bag record --all --output $log_dir/rosbag_$exp_num

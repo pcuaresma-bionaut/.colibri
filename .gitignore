@@ -1,0 +1,6 @@
+*
+!controls_configs/
+!vision_configs/
+!launcher_configs/
+!.gitignore/
+!*.yaml

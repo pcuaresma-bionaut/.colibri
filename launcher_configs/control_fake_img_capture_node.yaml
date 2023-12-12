@@ -1,0 +1,48 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_8em_v2_static/
+  - key: cam_a_port
+    default: 0
+  - key: cam_b_port
+    default: 2
+  - key: fps
+    default: 30  
+  - key: procedure
+    default: ORIENT    
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/experiment_data/misc/
+       
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230807_v1.yaml
+startup_steps:
+  - type: colcon_build
+  - type: colibri_research_ws
+    arguments: bag play /home/bionautlabs/repos/colibri_research_ws/rosbag2_2023_08_08-15_55_04 -l
+  - type: colibri_research_ws
+    arguments: "launch elmo_python_pkg elmo_client_w_heartbeat_launch.py"
+  - type: delay
+    seconds: 2
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir click_to_plan:=True using_ui:=True
+  - type: delay
+    seconds: 5
+  - type: colibri_research_ws
+    arguments: "topic pub --once /cropbox_is_init_a std_msgs/Bool '{data: True}'"
+  - type: colibri_research_ws
+    arguments: "topic pub --once /cropbox_is_init_b std_msgs/Bool '{data: True}'"
+  - type: colibri_research_ws
+    arguments: "topic pub --once /cropbox_a std_msgs/Int32MultiArray '{data: [568, 192, 1033, 564]}'"
+  - type: colibri_research_ws
+    arguments: "topic pub --once /cropbox_b std_msgs/Int32MultiArray '{data: [460, 176, 870, 466]}'"
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_node_cnn --ros-args -p cam_index:=a -p input_dir:=$input_dir
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_correction_node --ros-args -p cam_index:=a -p input_dir:=$input_dir -p click_to_plan:=True -p using_ui:=True
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_node_cnn --ros-args -p cam_index:=b -p input_dir:=$input_dir
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_detector_correction_node --ros-args -p cam_index:=b -p input_dir:=$input_dir -p click_to_plan:=True -p using_ui:=True
+  - type: colibri_research_ws
+    arguments: launch controls_pkg modular_cl_dwm_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir
+  - type: colibri_research_ws
+    arguments: run controls_pkg confirm_manual_keypress_node
+  - type: procedure_ui

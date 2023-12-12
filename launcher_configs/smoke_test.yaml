@@ -1,0 +1,24 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_8em_v2_static_new
+  - key: procedure
+    default: HAPPY_PATH_DWM
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/experiment_data
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/orient_20230804_v2.yaml
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node --ros-args -p procedure_plan:=$procedure
+    name: procedure_state
+
+  - type: colibri_research_ws
+    arguments: launch controls_pkg integrated_controls_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir
+    name: controls
+
+  - type: delay
+    seconds: 2
+
+  - type: colibri_research_ws
+    arguments: bag play /home/bionautlabs/Downloads/smoke_test_files/rosbag2_2023_08_24-14_00_03
