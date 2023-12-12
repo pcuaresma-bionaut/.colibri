@@ -4,7 +4,7 @@ parameters:
   - key: input_dir
     default: /home/bionautlabs/.colibri/input_20231211_mayo_final
   - key: procedure
-    default: ORIENT
+    default: HAPPY_PATH_DWM
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
     default: '20231212_BLIM10_mayo'
@@ -13,7 +13,7 @@ parameters:
     # default: /home/bionautlabs/.colibri/logs/
     # /media/bionautlabs/My Passport/b_logs/
   - key: experiment_num
-    default: _52
+    default: _1
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
