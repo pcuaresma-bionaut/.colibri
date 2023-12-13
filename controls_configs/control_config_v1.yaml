@@ -47,7 +47,7 @@ procedure:
 
   default_bmin_ramp: 0.5  # mT (range: 0.1 to 1.0 mT, typically 0.5 mT)
   continuous_max_power: 25  # kW # continuous power supply limit
-  fenestration_max_power: 25  # kW, only for small-duration pulses
+  fenestration_max_power: 50  # kW, only for small-duration pulses
   default_current_multiplier: 2  # 2 for Mayo system, - 2 for v2_static
   default_max_angle_dev: 10  # deg (range: 1 to 5 deg)
   convergence_angle_dev: 2  # deg (range: 1 to 5 deg)
