@@ -6,7 +6,7 @@ procedure:
   fenestration_force: 20.0 # mN
   retrieval_force: -5.0 # mN
   default_bmin: 10 #mT
-  bot: BOT_150_3A4L_SHELL
+  bot: 'BOT_150_MSS'
 
   # NOTE: to use these parameters, set bot to CUSTOM_CONFIGURATION
   # bot_mass: 2.24e-4     # kg
