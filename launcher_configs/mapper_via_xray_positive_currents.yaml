@@ -1,10 +1,10 @@
 parameters:
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20230924_mayo
+    default: /home/bionautlabs/.colibri/input_20231214_mayo
   - key: cam_a_port
-    default: 1
-  - key: cam_b_port
     default: 0
+  - key: cam_b_port
+    default: 1
   - key: fps
     default: 30
   - key: procedure
@@ -13,19 +13,19 @@ parameters:
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: exp_num
-    default: 3
+    default: 1
   - key: cart
-    default: 2
+    default: 3
   - key: coil
-    default: 4
+    default: 7
   - key: experiment
-    default: xray_mapping
+    default: mapping_validation
     # mapping, mapping_validation
   - key: object
     default: mapper
     # cart mapper
   - key: mapper_current
-    default: 50
+    default: 20
   
   
 log_dir: $experiment_op_dir/$experiment_coil$coil_p$mapper_currentA

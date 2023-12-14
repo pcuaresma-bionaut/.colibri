@@ -2,18 +2,18 @@ parameters:
   - key: vision_config_path
     default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20231211_mayo_final
+    default: /home/bionautlabs/.colibri/input_20231214_mayo_final
   - key: procedure
-    default: HAPPY_PATH_DWM
+    default: ORIENT
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20231213_BLIM10_mayo'
+    default: '20231214_BLIM10_mayo'
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
     # default: /home/bionautlabs/.colibri/logs/
     # /media/bionautlabs/My Passport/b_logs/
   - key: experiment_num
-    default: _13
+    default: _1
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
