@@ -1,5 +1,5 @@
 procedure:
-  use_water: False
+  use_water: True
   orient_angle:
   - 0 # deg azimuth (+/- 20 deg)
   - 35 # deg elevation (0 to 90 deg)
