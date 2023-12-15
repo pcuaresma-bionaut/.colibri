@@ -13,7 +13,7 @@ parameters:
     # default: /home/bionautlabs/.colibri/logs/
     # /media/bionautlabs/My Passport/b_logs/
   - key: experiment_num
-    default: _3
+    default: _4
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
