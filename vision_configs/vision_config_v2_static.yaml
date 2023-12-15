@@ -29,7 +29,7 @@ mono_tracker_a_settings:
   fallback_to_available_providers: false
   startup_timeout_s: 30.0
   operational_timeout_s: 1
-  initial_orientation: 135
+  initial_orientation: 90
 mono_tracker_b_settings:
   filter_options:
     largest: true
@@ -43,7 +43,7 @@ mono_tracker_b_settings:
   fallback_to_available_providers: false
   startup_timeout_s: 30.0
   operational_timeout_s: 1
-  initial_orientation: 90
+  initial_orientation: 135
 stereo_settings:
   detector_max_delay_ms: 500
   noise_detection: true
