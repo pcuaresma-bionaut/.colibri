@@ -1,7 +1,7 @@
 procedure:
   use_water: True
   orient_angle:
-  - 0 # deg azimuth (+/- 20 deg)
+  - -10 # deg azimuth (+/- 20 deg)
   - 25 # deg elevation (0 to 90 deg)
   fenestration_force: 20.0 # mN
   retrieval_force: -5.0 # mN
