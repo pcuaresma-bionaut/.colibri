@@ -7,7 +7,7 @@ parameters:
     default: ORIENT
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20231215_BLIM10_aquarium_35_mayo'
+    default: '20231216_BLIM10_aquarium_35_mayo'
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
     # default: /home/bionautlabs/.colibri/logs/
