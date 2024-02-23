@@ -2,13 +2,13 @@ parameters:
   - key: mag_model_input_dir
     default: /home/misc/coil_mapping_SN2
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240220_v3_sn2_mayo
+    default: /home/bionautlabs/.colibri/input_20240223_v3_sn2_mayo
   - key: exp_type
-    default: 20240222_cart_reg_9
+    default: 20240223_cart_reg_6
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: cart
-    default: 0
+    default: 1
   - key: procedure
     default: ORIENT
 

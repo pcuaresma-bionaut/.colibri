@@ -2,18 +2,18 @@ parameters:
   - key: vision_config_path
     default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20231214_mayo
+    default: /home/bionautlabs/.colibri/input_20240223_v3_sn2_mayo
   - key: procedure
     default: HAPPY_PATH_DWM
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20231216_BLIM10_aquarium_35_fenestration_mayo'
+    default: '20240223_KINT3_aquarium_35_mayo'
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
     # default: /home/bionautlabs/.colibri/logs/
     # /media/bionautlabs/My Passport/b_logs/
   - key: experiment_num
-    default: _21
+    default: _4
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
@@ -25,7 +25,7 @@ startup_steps:
     show_terminal: False
 
   - type: colibri_research_ws
-    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py s_ip:=192.168.1.3
     name: 01_elmo_launch
 
   - type: delay
