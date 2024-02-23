@@ -6,7 +6,7 @@ procedure:
   fenestration_force: 20.0 # mN
   retrieval_force: -5.0 # mN
   default_bmin: 10 #mT
-  bot: 'BOT_150_3A4L_SHELL' #'BOT_150_MSS'
+  bot: '3A4_MSS' #'BOT_150_MSS'
 
   # NOTE: to use these parameters, set bot to CUSTOM_CONFIGURATION
   # bot_mass: 2.24e-4     # kg
@@ -57,9 +57,9 @@ procedure:
   default_gravity_opposition_force: -0.5 # multiple of gravitational force
   
   # v0.26
-  orient_stepsize: 5  # deg/s (range: 1 to 10 deg/s)
+  # orient_stepsize: 5  # deg/s (range: 1 to 10 deg/s)
   
   # v0.27+
-  # orient_rate: 2  # deg/s (range: 1 to 10 deg/s)
+  orient_rate: 2  # deg/s (range: 1 to 10 deg/s)
   # orient_step_size: 5  # deg 
   # pause_after_intermediate_orient: 3 # sec 

@@ -2,14 +2,14 @@ parameters:
   - key: vision_config_path
     default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20231210_mayo_final
+    default: /home/bionautlabs/.colibri/input_20240220_v3_sn2_mayo
   - key: procedure
     default: ORIENT
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: exp_num
-    default: 20231211_calib_check_5
+    default: 20240222_calib_check_5
     
 log_dir: $experiment_op_dir/$exp_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml

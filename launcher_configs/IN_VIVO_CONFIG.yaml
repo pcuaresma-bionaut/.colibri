@@ -4,17 +4,14 @@ parameters:
   - key: input_dir
     default: /home/bionautlabs/.colibri/input_20231214_mayo
   - key: procedure
-    default: HAPPY_PATH_DWM
+    default: IN_VIVO_ORIENT
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20231216_BLIM10_aquarium_35_fenestration_mayo'
+    default: '20231215_BLIM10_mayo'
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
     # default: /home/bionautlabs/.colibri/logs/
     # /media/bionautlabs/My Passport/b_logs/
-  - key: experiment_num
-    default: _21
-log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
 startup_steps:
@@ -40,7 +37,7 @@ startup_steps:
 
   - type: colibri_research_ws
     name: 03_rosbag_record
-    arguments: bag record --all --output $log_dir/rosbag_$procedure_$procedure_suffix_EXP$experiment_num
+    arguments: bag record --all --output $log_dir/rosbag_IN_VIVO_CONFIG
 
   - type: colibri_research_ws
     arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a configuration:=$vision_config_path input_dir:=$input_dir

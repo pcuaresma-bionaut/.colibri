@@ -1,0 +1,77 @@
+video_capture_settings_a:
+    camera_port: 1
+    fps: 30
+    height: 1024
+    width: 1280
+    filter_blank: true
+    filter_blank_std_dev_threshold: 5
+    publish_cropped: true
+    publish_uncropped: false
+    cropbox: 
+      # x1: 
+      # y1: 
+      # x2: 
+      # y2: 
+video_capture_settings_b:
+    camera_port: 0
+    fps: 30
+    height: 1024
+    width: 1280
+    filter_blank: true
+    filter_blank_std_dev_threshold: 5
+    publish_cropped: true
+    publish_uncropped: false
+    cropbox:
+      # x1: 
+      # y1: 
+      # x2: 
+      # y2: 
+mono_tracker_a_settings: # AP
+  filter_options:
+    largest: true
+    most_confident: false
+    confidence_threshold: 0.5
+    max_pixels: null
+    min_pixels: null
+    max_major_axis_length: null
+    min_major_axis_length: null
+  model_path_override: null
+  fallback_to_available_providers: false
+  startup_timeout_s: 30.0
+  operational_timeout_s: 1
+  frame_overrun_allowance_s: 0.01
+  initial_orientation: 90  # <-- update me
+mono_tracker_b_settings: # LAT
+  filter_options:
+    largest: true
+    most_confident: false
+    confidence_threshold: 0.5
+    max_pixels: null
+    min_pixels: null
+    max_major_axis_length: null
+    min_major_axis_length: null
+  model_path_override: null
+  fallback_to_available_providers: false
+  startup_timeout_s: 30.0
+  operational_timeout_s: 1
+  frame_overrun_allowance_s: 0.01
+  initial_orientation: 135  # <-- update me
+overlay_settings:
+  bot_detection_2d_line_color: [0, 255, 255]
+  bot_detection_reprojected_blade_color: [0, 0, 255]
+  bot_detection_reprojected_centroid_color: [255, 0, 0]
+  bot_detection_reprojected_line_color: [0, 255, 0]
+  bot_detection_reprojected_tail_color: [255, 0, 255]
+  epiline_color: [0, 255, 255]
+  ptv_line_alpha: 0.2
+  ptv_line_color: [0, 255, 0]
+  safeRangeLine_color: [0, 255, 0]
+  show_bot_detection_2d: true
+  show_bot_detection_reprojected: false
+  show_epiline: false
+  show_ptv: false
+  show_safe_range_lines: false
+  show_treatment_sphere: false
+  trajectory_lines_color: [51, 204, 204]
+  treatment_sphere_alpha: 0.1
+  treatment_sphere_color: [200, 177, 130]

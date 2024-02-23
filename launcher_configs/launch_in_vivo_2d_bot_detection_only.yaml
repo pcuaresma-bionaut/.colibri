@@ -1,0 +1,27 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20231211_mayo_final
+  - key: vision_config_path
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_2d_bot_detection_only.yaml
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    name: rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_in_vivo_202402
+
+  - type: colibri_research_ws
+    arguments: run gui_interface_pkg gui_interface_node --ros-args -p input_dir:=$input_dir
+    name: 02_gui_interface_launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a configuration:=$vision_config_path input_dir:=$input_dir
+    name: 04_mono_tracking_a_launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b configuration:=$vision_config_path input_dir:=$input_dir
+    name: 05_mono_tracking_b_launch
+
+  - type: procedure_ui
+    name: procedure ui launch
+
