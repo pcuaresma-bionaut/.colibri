@@ -2,7 +2,7 @@ parameters:
   - key: vision_config_path
     default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane_redo_reg_022724
+    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
     # default: /home/bionautlabs/.colibri/input_20231106_v2_static
   - key: cam_a_port
     default: 0
