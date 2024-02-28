@@ -2,9 +2,9 @@ parameters:
   - key: mag_model_input_dir
     default: /home/misc/coil_mapping_SN2
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240223_v3_sn2_mayo
+    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane_redo_reg_022724
   - key: exp_type
-    default: 20240223_cart_reg_6
+    default: 20240226_cart_reg_3
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: cart
