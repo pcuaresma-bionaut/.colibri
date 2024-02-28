@@ -1,0 +1,46 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20240223_v3_sn2_mayo
+  - key: cam_a_port
+    default: 0
+  - key: cam_b_port
+    default: 2
+  - key: vision_config
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static.yaml
+  - key: fps
+    default: 30
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/experiment_data/20240223_bot_detection
+  - key: experiment_num
+    default: 13
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
+log_dir: $experiment_op_dir/EXP_$experiment_num
+
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir configuration:=$vision_config
+    name: stereo launch
+
+  - type: delay
+    seconds: 3
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a cam_port:=$cam_a_port input_dir:=$input_dir configuration:=$vision_config
+    name: mono tracking_a launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b cam_port:=$cam_b_port input_dir:=$input_dir configuration:=$vision_config
+    name: mono tracking_b launch
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg bot_pose_saver_node --ros-args -p log_dir:=$experiment_op_dir -p exp_num:=$experiment_num
+    name: bot pose saver
+
+  - type: procedure_ui
+    name: procedure ui launch
+
+  # - type: colibri_research_ws
+  #   name: rosbag_record
+  #   arguments: bag record -o /img_crop_a /img_crop_b --output $log_dir/rosbag_EXP$experiment_num
