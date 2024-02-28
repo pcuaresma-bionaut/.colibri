@@ -1,0 +1,68 @@
+parameters:
+  - key: vision_config_path
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_old.yaml
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane
+  - key: procedure
+    default: HAPPY_PATH_DWM
+    #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
+  - key: procedure_suffix
+    default: '20240227_KINT10_head_phantom_fenestrations'
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/experiment_data/
+  - key: experiment_num
+    default: _16
+log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_feb_mayo.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: subprocess
+    arguments: ffmpeg -f x11grab -y -r 15 -i :1 -vcodec libx264 $log_dir/screen_recording.avi
+    show_terminal: False
+
+  - type: colibri_research_ws
+    arguments: launch elmo_python_pkg elmo_client_w_heartbeat_launch.py s_ip:=192.168.1.3 current_hold_max_period:=2.0
+    name: 01_elmo_launch
+
+  # - type: delay
+  #   seconds: 2
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg stereo_cam_NN_launch.py input_dir:=$input_dir configuration:=$vision_config_path
+    name: 02_stereo_launch
+
+  # - type: delay
+  #   seconds: 5
+
+  - type: colibri_research_ws
+    name: 03_rosbag_record
+    arguments: bag record --all --output $log_dir/rosbag_$procedure_$procedure_suffix_EXP$experiment_num
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=a configuration:=$vision_config_path input_dir:=$input_dir
+    name: 04_mono_tracking_a_launch
+
+  - type: colibri_research_ws
+    arguments: launch vision_pkg mono_tracking_NN_launch.py cam_index:=b configuration:=$vision_config_path input_dir:=$input_dir
+    name: 05_mono_tracking_b_launch
+
+  # - type: delay
+  #   seconds: 10
+
+  - type: colibri_research_ws
+    arguments: launch controls_pkg integrated_controls_launch.py input_dir:=$input_dir procedure:=$procedure experiment_op_dir:=$experiment_op_dir procedure_suffix:=$procedure_suffix experiment_num:=$experiment_num
+    name: 06_controls_launch
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg fenestration_accuracy_node --ros-args -p log_dir:=$log_dir
+    name: 07_fenestration_accuracy
+  - type: colibri_research_ws
+    arguments: run controls_pkg procedure_state_node --ros-args -p procedure_plan:=$procedure
+    name: 08_procedure_state
+
+  - type: procedure_ui
+    name: 0_procedure_ui_launch
+    
+    

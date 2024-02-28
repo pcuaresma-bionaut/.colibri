@@ -1,0 +1,31 @@
+parameters:
+  - key: input_dir
+    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane
+  - key: exp_num
+    default: 4
+  - key: experiment_op_dir
+    default: /home/bionautlabs/.colibri/logs/
+  - key: procedure
+    default: ORIENT
+log_dir: $experiment_op_dir/gravity_vector_$exp_num
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
+
+startup_steps:
+  - type: colcon_build
+
+  - type: colibri_research_ws
+    arguments: run vision_pkg optitrack_stream
+    name: 01_optitrack_stream
+
+  - type: colibri_research_ws
+    arguments: run controls_pkg gravity_vec_update_node --ros-args -p input_dir:=$input_dir
+    name: 02_gravity_vec_node
+
+  - type: colibri_research_ws
+    arguments: topic echo \gravity_fiducials
+    name: 03_gravity_fiducials_echo
+
+  # - type: colibri_research_ws
+  #   name: 05_rosbag_record
+  #   arguments: bag record --all --output $log_dir/rosbag_cart$cart
+  

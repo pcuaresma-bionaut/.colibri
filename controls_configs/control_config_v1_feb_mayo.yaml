@@ -1,0 +1,58 @@
+procedure:
+  use_water: True
+  orient_angle:
+  - 0 # deg azimuth (+/- 20 deg)
+  - 40 # deg elevation (0 to 90 deg)
+  fenestration_force: 20.0 # mN
+  retrieval_force: -5.0 # mN
+  default_bmin: 10 #mT
+  mps_version: v3
+  bot: 3A4_MSS
+
+  # NOTE: to use these parameters, set bot to CUSTOM_CONFIGURATION
+  # bot_mass: 2.24e-4     # kg
+  # bot_volume: 3.273e-8  # m^3
+  # bot_moment: 0.030     # Nm/T
+  # bot_radius: 1.5e-3    # m
+  # bot_height: 5.5e-3    # m
+
+  pid_gains:
+    orient:
+      - input_abs_threshold: 2.0
+        kp: 0.1
+        ki: 0.01
+        kd: 0.0
+      - input_abs_threshold: 10.0
+        kp: 0.2
+        ki: 0.01
+        kd: 0.0
+      - kp: 0.2
+        ki: 0.01
+        kd: 0.0
+    hold_pose:
+      - kp: 0.2
+        ki: 0.01
+        kd: 0.0 
+    reorient:
+      - input_abs_threshold: 2.0
+        kp: 0.1
+        ki: 0.01
+        kd: 0.0
+      - input_abs_threshold: 10.0
+        kp: 0.2
+        ki: 0.01
+        kd: 0.0
+      - kp: 0.25
+        ki: 0.01
+        kd: 0.0
+  default_bmin_ramp: 0.5  # mT (range: 0.1 to 1.0 mT, typically 0.5 mT)
+  continuous_max_power: 25  # kW # continuous power supply limit
+  fenestration_max_power: 25  # kW, only for small-duration pulses
+  default_current_multiplier: 2  # 2 for Mayo system, -2 for v2_static
+  default_max_angle_dev: 10  # deg (range: 1 to 5 deg)
+  convergence_angle_dev: 1  # deg (range: 1 to 5 deg)
+  control_timestep: 50 # ms (range: 10 to 100 ms)
+  orient_rate: 8  # deg/s (range: 1 to 10 deg/s)
+  hold_orientation_duration: 5000 # ms (range: 1000 to 10000 ms)
+  default_force_bot_dir: -0.5 # mN (range: -0.1 to -1.0 mN)
+  default_gravity_opposition_force: -0.5 # multiple of gravitational force
