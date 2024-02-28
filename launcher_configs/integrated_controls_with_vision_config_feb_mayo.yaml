@@ -2,16 +2,16 @@ parameters:
   - key: vision_config_path
     default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_old.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane
+    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
   - key: procedure
     default: HAPPY_PATH_DWM
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20240227_KINT10_head_phantom_fenestrations'
+    default: '20240228_KINT10_rereg_35_aquarium_fluoro_timing_mayo'
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/experiment_data/
   - key: experiment_num
-    default: _16
+    default: _6
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_feb_mayo.yaml
 

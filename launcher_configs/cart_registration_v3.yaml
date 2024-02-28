@@ -2,9 +2,9 @@ parameters:
   - key: mag_model_input_dir
     default: /home/misc/coil_mapping_SN2
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane_redo_reg_022724
+    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
   - key: exp_type
-    default: 20240226_cart_reg_3
+    default: 20240227_cart_reg_0
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: cart
@@ -16,7 +16,7 @@ log_dir: $experiment_op_dir/$exp_type_cart$cart
 
 # log_dir: $experiment_op_dir/gravity_fiducials
 
-controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_old.yaml
 
 startup_steps:
   - type: colcon_build

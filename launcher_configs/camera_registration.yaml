@@ -16,7 +16,7 @@ parameters:
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: exp_num
-    default: 20240225_cam_registration_6
+    default: 20240227_cam_registration_2
     
 log_dir: $experiment_op_dir/calib_check_$exp_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_old.yaml
