@@ -1,31 +1,31 @@
 parameters:
   - key: mag_model_input_dir
-    default: /home/bionautlabs/.colibri/input_20240220_v3_sn2_mayo
+    default: /home/bionautlabs/.colibri/input_20240312_v3_sn2_mayo
   - key: matrix_mapper_ip_dir
     default: /home/bionautlabs/repos/colibri_research_ws/matrix_mapper
   - key: exp_op_folder
-    default: mayo_v3_sn2_xray_distortion_test_AP
+    default: current_tests
   - key: exp_type
-    default: mapping
+    default: mapping_val
     # mapping, mapping_val, mag_model_val
   - key: active_coils
     # default: "[0,1,2,3]"
     # default: "[4,5,6,7]"
     # default: "[0,1,4,5]"
     # default: "[2,3,6,7]"
-    default: "[0,1,2,3,4,5,6,7]"
+    default: "[0]"
   - key: active_coil_int
     # default: 0,1,2,3
     # default: 4,5,6,7
     # default: 0,1,4,5
     # default: 2,3,6,7
-    default: 0,1,2,3,4,5,6,7
+    default: 0
   - key: driver_currents
-    default: "[153]" #45, -65, 95
+    default: "[200]" #mapping: 50, -60, 70, -80, 90 val: 45, -75, 100
   - key: driver_current_int
-    default: p153 # p20 if positive currents and n20 if negative currents
+    default: p200 # p20 if positive currents and n20 if negative currents
   - key: experiment_op_dir
-    default: /home/bionautlabs/.colibri/logs/
+    default: /home/bionautlabs/.colibri/logs/APR_MAYO_DATA
 
 log_dir: $experiment_op_dir/$exp_op_folder/$exp_type_coil$active_coil_int_$driver_current_intA
 

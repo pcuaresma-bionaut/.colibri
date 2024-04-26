@@ -2,9 +2,9 @@ parameters:
   - key: mag_model_input_dir
     default: /home/misc/coil_mapping_SN2
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
+    default: /home/bionautlabs/.colibri/input_20240313_v3_sn2_mayo_practice
   - key: exp_type
-    default: 20240227_cart_reg_0
+    default: cart_registration_2_cams
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: cart
@@ -34,10 +34,5 @@ startup_steps:
     name: 03_cart_fids_echo
 
   # - type: colibri_research_ws
-  #   arguments: topic echo \gravity_fiducials
-  #   name: 03_gravity_fiducials_echo
-
-  - type: colibri_research_ws
-    name: 05_rosbag_record
-    arguments: bag record --all --output $log_dir/rosbag_cart$cart
-    # arguments: bag record --all --output $log_dir/rosbag_gravity_fiducials
+  #   name: 05_rosbag_record
+  #   arguments: bag record --all --output $log_dir/rosbag_cart$cart

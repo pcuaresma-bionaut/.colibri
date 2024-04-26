@@ -8,12 +8,12 @@ video_capture_settings_a:
     publish_cropped: true
     publish_uncropped: false
     cropbox:
-      x1: 447
-      y1: 530
-      x2: 594
-      y2: 721
+      #  x1: 324
+      #  y1: 377
+      #  x2: 715
+      #  y2: 898
 video_capture_settings_b:
-    camera_port: 2
+    camera_port: 1
     fps: 30
     height: 1024
     width: 1280
@@ -22,10 +22,10 @@ video_capture_settings_b:
     publish_cropped: true
     publish_uncropped: false
     cropbox:
-      x1: 652 
-      y1: 552
-      x2: 843
-      y2: 911
+      #  x1: 376 
+      #  y1: 313
+      #  x2: 814
+      #  y2: 975
 mono_tracker_a_settings:
   filter_options:
     largest: true
@@ -39,7 +39,7 @@ mono_tracker_a_settings:
   fallback_to_available_providers: false
   startup_timeout_s: 30.0
   operational_timeout_s: 1
-  initial_orientation: 75
+  initial_orientation: 135
 mono_tracker_b_settings:
   filter_options:
     largest: true
@@ -53,7 +53,7 @@ mono_tracker_b_settings:
   fallback_to_available_providers: false
   startup_timeout_s: 30.0
   operational_timeout_s: 1
-  initial_orientation: 175
+  initial_orientation: 90
 stereo_settings:
   detector_max_delay_ms: 500
   noise_detection: true

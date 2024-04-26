@@ -1,8 +1,8 @@
 parameters:
   - key: vision_config_path
-    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_calib.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo
+    default: /home/bionautlabs/.colibri/input_20240313_v3_sn2_mayo_practice
   - key: cam_a_port
     default: 0
   - key: cam_b_port
@@ -12,7 +12,7 @@ parameters:
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: exp_num
-    default: xray_calib_20240224_12
+    default: xray_calib_03132024_5
 log_dir: $experiment_op_dir/calib_$exp_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
@@ -22,7 +22,7 @@ startup_steps:
   - type: delay
     seconds: 2
 #########################################################################################################################################################################
-# FOR CAM A
+# # FOR CAM A
   # - type: colibri_research_ws
   #   arguments: run vision_pkg img_capture_node --ros-args -p cam_index:=a -p input_dir:=$input_dir -p configuration:=$vision_config_path
   #   name: 01_img_capture_a

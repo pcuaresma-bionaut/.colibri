@@ -1,15 +1,15 @@
 parameters:
   - key: vision_config_path
-    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_calib.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo
+    default: /home/bionautlabs/.colibri/input_20240313_v3_sn2_mayo_practice
   - key: procedure
     default: ORIENT
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs
   - key: exp_num
-    default: 20240224_calib_check_0
+    default: 20240313_calib_check_2
     
 log_dir: $experiment_op_dir/$exp_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
@@ -53,7 +53,7 @@ startup_steps:
     name: 03_click_save_raw
 
   - type: colibri_research_ws
-    arguments: run vision_pkg calibration_check_node --ros-args -p input_dir:=$experiment_op_dir/$exp_num
+    arguments: run vision_pkg calibration_check_node --ros-args -p input_dir:=$input_dir
     name: 04_calib_check
 
 

@@ -1,8 +1,8 @@
 parameters:
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240224_v3_sn2_mayo_straight_ground_plane
+    default: /home/bionautlabs/.colibri/input_20240312_horizontal_v3_sn2_mayo
   - key: exp_num
-    default: 4
+    default: 2
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: procedure

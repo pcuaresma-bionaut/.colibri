@@ -1,25 +1,26 @@
 parameters:
   - key: vision_config_path
-    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_old.yaml
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_mayo.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
+    default: /home/bionautlabs/.colibri/input_20240313_v3_sn2_mayo
   - key: procedure
     default: HAPPY_PATH_DWM
     #IN_VIVO_ORIENT, HAPPY_PATH_DWM, ORIENT, STEPPED_ORIENT
   - key: procedure_suffix
-    default: '20240228_KINT10_rereg_35_aquarium_fluoro_timing_mayo'
+    # default: '20240313_WORKFLOW_TESTING'
+    default: '20240315_fenestration_accuracy_DV'
   - key: experiment_op_dir
-    default: /home/bionautlabs/.colibri/experiment_data/
+    default: /home/bionautlabs/.colibri/logs/
   - key: experiment_num
-    default: _6
+    default: _5
 log_dir: $experiment_op_dir/$procedure_$procedure_suffix/EXP$experiment_num
-controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_feb_mayo.yaml
+controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1.yaml
 
 startup_steps:
   - type: colcon_build
 
   - type: subprocess
-    arguments: ffmpeg -f x11grab -y -r 15 -i :1 -vcodec libx264 $log_dir/screen_recording.avi
+    arguments: ffmpeg -f x11grab -y -r 15 -i :1 di-vcodec libx264 $log_dir/screen_recording.avi
     show_terminal: False
 
   - type: colibri_research_ws

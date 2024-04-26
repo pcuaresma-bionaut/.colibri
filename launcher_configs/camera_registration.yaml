@@ -1,8 +1,8 @@
 parameters:
   - key: vision_config_path
-    default: /home/bionautlabs/.colibri/vision_configs/vision_config_v2_static_calib.yaml
+    default: /home/bionautlabs/.colibri/vision_configs/vision_config_calib.yaml
   - key: input_dir
-    default: /home/bionautlabs/.colibri/input_20240227_v3_sn2_mayo_straight_ground_plane_redo_reg
+    default: /home/bionautlabs/.colibri/input_20240313_v3_sn2_mayo_practice
     # default: /home/bionautlabs/.colibri/input_20231106_v2_static
   - key: cam_a_port
     default: 0
@@ -16,9 +16,9 @@ parameters:
   - key: experiment_op_dir
     default: /home/bionautlabs/.colibri/logs/
   - key: exp_num
-    default: 20240227_cam_registration_2
+    default: 20240313_reg_3
     
-log_dir: $experiment_op_dir/calib_check_$exp_num
+log_dir: $experiment_op_dir/cam_reg_$exp_num
 controls_config_path: /home/bionautlabs/.colibri/controls_configs/control_config_v1_old.yaml
 
 startup_steps:

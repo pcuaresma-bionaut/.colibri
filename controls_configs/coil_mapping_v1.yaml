@@ -1,8 +1,8 @@
 system_characterization:
   current_step_duration: 50 # ms, current timestep
   max_ramp_counter: 10 # ramp currents in n steps
-  hold_duration: 5 # s, hold currents for n seconds
-  max_matrix_mapper_runs: 5 # number of times to run matrix mapper
+  hold_duration: 10 # s, hold currents for n seconds
+  max_matrix_mapper_runs: 10 # number of times to run matrix mapper
 
 procedure:
   use_water: True
